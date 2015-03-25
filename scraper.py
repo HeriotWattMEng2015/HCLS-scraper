@@ -1,4 +1,6 @@
-html = open("table.htm").read()
+import sys
+
+html = open(sys.argv[1]).read()
 
 from bs4 import BeautifulSoup
 h = BeautifulSoup(html)
