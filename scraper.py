@@ -47,6 +47,10 @@ prop_fixes = {
         ["dct:source","pav:retrievedFrom","prov:wasDerivedFrom"]
 }
 
+SummaryLevelShape = 0
+VersionLevelShape = 1
+DistributionLevelShape = 2
+
 def get_shex(elem, lev, prop, val):
     rule = "\n\t#" + elem + "\n"
     rule += "\t`" + lev + "` "
@@ -57,32 +61,62 @@ def get_shex(elem, lev, prop, val):
     rule += ";"
     print rule
 
-for row in h.find_all("tr")[1:]:
-    
-    cols = row.find_all("td")
-    
-    if(len(cols) < 6):
-        print "\n\n#" + cols[0].get_text().strip()
-        continue
-    
-    elem = cols[0].get_text().strip()
-    lev = cols[3].get_text().strip()
-    prop = cols[1].get_text().strip()
-    val = cols[2].get_text().strip()
-        
-    if(prop in prop_fixes):
-        for fix in prop_fixes[prop]:
-            get_shex(elem, lev, fix, val)
-        continue
-        
-    if(val in val_fixes):
-        for fix in val_fixes[val]:
-            get_shex(elem, lev, prop, fix)
-        continue
-    
-    if(val and " " not in val and " " not in prop):
-        get_shex(elem, lev, prop, val)
-        
-    else:
-        get_shex(elem, lev, "###SORT THIS OUT###", "###SORT THIS OUT###")
+def get_shape(shape):
+    for row in h.find_all("tr")[1:]:
+
+        cols = row.find_all("td")
+
+        if(len(cols) < 6):
+            print "\n\n#" + cols[0].get_text().strip()
+            continue
+
+        elem = cols[0].get_text().strip()
+        lev = cols[3 + shape].get_text().strip()
+        prop = cols[1].get_text().strip()
+        val = cols[2].get_text().strip()
+
+        if(prop in prop_fixes):
+            for fix in prop_fixes[prop]:
+                get_shex(elem, lev, fix, val)
+            continue
+
+        if(val in val_fixes):
+            for fix in val_fixes[val]:
+                get_shex(elem, lev, prop, fix)
+            continue
+
+        if(val and " " not in val and " " not in prop):
+            get_shex(elem, lev, prop, val)
+
+        else:
+            get_shex(elem, lev, "###SORT THIS OUT###", "###SORT THIS OUT###")
+
+print """
+PREFIX cito: <http://purl.org/spar/cito/>
+PREFIX dcat: <http://www.w3.org/ns/dcat#>
+PREFIX dct: <http://purl.org/dc/terms/>
+PREFIX dctypes: <http://purl.org/dc/dcmitype/>
+PREFIX foaf: <http://xmlns.com/foaf/0.1/>
+PREFIX freq: <http://purl.org/cld/freq/>
+PREFIX idot: <http://identifiers.org/idot/>
+PREFIX lexvo: <http://lexvo.org/id/iso639-3/>
+PREFIX pav: <http://purl.org/pav/>
+PREFIX prov: <http://www.w3.org/ns/prov#>
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>
+PREFIX schemaorg: <http://schema.org/>
+PREFIX sd: <http://www.w3.org/ns/sparql-service-description#>
+PREFIX sio: <http://semanticscience.org/resource/>
+PREFIX void: <http://rdfs.org/ns/void#>
+PREFIX void-ext: <http://ldf.fi/void-ext#>
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
+"""
+print "<SummaryLevelShape> {"
+get_shape(SummaryLevelShape)
+print "}\n\n<VersionLevelShape> {"
+get_shape(VersionLevelShape)
+print "}\n\n<DistributionLevelShape> {"
+get_shape(DistributionLevelShape)
+print "}"
+
     
