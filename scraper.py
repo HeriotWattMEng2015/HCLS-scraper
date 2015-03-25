@@ -14,7 +14,7 @@ val_fixes = {
     
     # Other dates
     "xsd:dateTime, xsd:date, xsd:gYearMonth, or xsd:gYear" :
-        "(xsd:dateTime xsd:date xsd:gYearMonth xsd:gYear)",
+        "xsd:gYearMonth",
     
     # Date created
     "rdfs:Literal encoded using the relevant ISO 8601 Date and Time compliant string and typed using the appropriate XML Schema datatype":
@@ -65,7 +65,8 @@ cardinality_fixes = {
     ("dcat:theme", "IRI"): "+",
     ("dct:conformsTo", "IRI"): "+",
     ("cito:citesAsAuthority", "IRI"): "+",
-    ("dct:hasPart", "IRI"): "+"
+    ("dct:hasPart", "IRI"): "+",
+    ("dcat:distribution", "IRI"): "+"
 }
 
 shapes = {
