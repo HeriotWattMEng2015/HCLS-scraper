@@ -5,44 +5,63 @@ table = BeautifulSoup(open(sys.argv[1]).read())
 
 val_fixes = {
     # Type declaration
-    "dctypes:Dataset" : ["(dctypes:Dataset)"],
+    "dctypes:Dataset" :
+        "(dctypes:Dataset)",
     
     # Type declaration
     "void:Dataset or dcat:Distribution" :
-        ["(void:Dataset)", "(dcat:Distribution)"],
+        "(void:Dataset, dcat:Distribution)",
     
     # Date created
-    "rdfs:Literal encoded using the relevant ISO 8601 Date and Time compliant string and typed using the appropriate XML Schema datatype": ["."],
+    "rdfs:Literal encoded using the relevant ISO 8601 Date and Time compliant string and typed using the appropriate XML Schema datatype":
+        ".",
     
     # Language
-    "http://lexvo.org/id/iso639-3/{tag}": ["."],
+    "http://lexvo.org/id/iso639-3/{tag}":
+        ".",
     
     # Concept descriptors
-    "IRI of type skos:Concept": ["IRI"],
+    "IRI of type skos:Concept":
+        "IRI",
     
     # Update frequency
-    "IRI of type dctypes:Frequency": ["IRI"],
+    "IRI of type dctypes:Frequency":
+        "IRI",
     
     # Distribution description
-    "IRI of Distribution Level description": ["IRI"],
+    "IRI of Distribution Level description": 
+        "IRI",
     
     # File format
-    "IRI or xsd:String": ["."]
-    
+    "IRI or xsd:String":
+        "."   
 }
 
 prop_fixes = {
     # Other dates
     "pav:createdOn or pav:authoredOn or pav:curatedOn":
-        ["###BROKEN FIX ME###"],
+        "###BROKEN FIX ME###",
     
     # Contributors
     "dct:contributor or or pav:createdBy or pav:authoredBy or pav:curatedBy" : 
-        ["dct:contributor", "pav:createdBy", "pav:authoredBy", "pav:curatedBy"],
+        "(dct:contributor, pav:createdBy, pav:authoredBy, pav:curatedBy)",
     
     # Data source provenance
     "dct:source or pav:retrievedFrom or prov:wasDerivedFrom":
-        ["dct:source","pav:retrievedFrom","prov:wasDerivedFrom"]
+        "(dct:source, pav:retrievedFrom, prov:wasDerivedFrom)"
+}
+
+cardinality_fixes = {
+    ("dct:license", "IRI"):"+",
+    ("dct:creator", "IRI"):"+",
+    ("(dct:contributor, pav:createdBy, pav:authoredBy, pav:curatedBy)", "IRI"):"+",
+    ("dcat:keyword", "xsd:string"): "+",
+    ("dct:rights", "xsd:string"): "+",
+    ("dct:references", "IRI"): "+",
+    ("dcat:theme", "IRI"): "+",
+    ("dct:conformsTo", "IRI"): "+",
+    ("cito:citesAsAuthority", "IRI"): "+",
+    ("dct:hasPart", "IRI"): "+"
 }
 
 shapes = {
@@ -52,13 +71,14 @@ shapes = {
 }
 
 
-def get_shex(elem, lev, prop, val):
+def get_shex(elem, lev, prop, val, cardinality):
     rule = "\n    #" + elem + "\n"
     rule += "    `" + lev + "` "
     if("NOT" in lev):
         rule += "!"
     rule += prop + " "
     rule += val
+    rule += cardinality
     rule += ";"
     print rule
 
@@ -76,19 +96,20 @@ def get_shape(shape):
         lev = cols[3 + shapes[shape]].get_text().strip()
         prop = cols[1].get_text().strip()
         val = cols[2].get_text().strip()
+        cardinality = ""
 
         if(prop in prop_fixes):
-            for fix in prop_fixes[prop]:
-                get_shex(elem, lev, fix, val)
-            continue
+            prop = prop_fixes[prop]
 
         if(val in val_fixes):
-            for fix in val_fixes[val]:
-                get_shex(elem, lev, prop, fix)
-            continue
+            val = val_fixes[val]
+            
+        if((prop, val) in cardinality_fixes):
+            cardinality = cardinality_fixes[(prop, val)]
+            
 
-        if(val and " " not in val and " " not in prop):
-            get_shex(elem, lev, prop, val)
+        if(val and prop):
+            get_shex(elem, lev, prop, val, cardinality)
 
         else:
             get_shex(elem, lev, "###SORT THIS OUT###", "###SORT THIS OUT###")

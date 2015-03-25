@@ -27,10 +27,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
     `MUST` rdf:type (dctypes:Dataset);
 
     #Type declaration
-    `MUST NOT` !rdf:type (void:Dataset);
-
-    #Type declaration
-    `MUST NOT` !rdf:type (dcat:Distribution);
+    `MUST NOT` !rdf:type (void:Dataset, dcat:Distribution);
 
     #Title
     `MUST` dct:title rdf:langString;
@@ -48,19 +45,10 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
     `MUST NOT` !###BROKEN FIX ME### xsd:dateTime, xsd:date, xsd:gYearMonth, or xsd:gYear;
 
     #Creators
-    `MUST NOT` !dct:creator IRI;
+    `MUST NOT` !dct:creator IRI+;
 
     #Contributors
-    `MUST NOT` !dct:contributor IRI;
-
-    #Contributors
-    `MUST NOT` !pav:createdBy IRI;
-
-    #Contributors
-    `MUST NOT` !pav:authoredBy IRI;
-
-    #Contributors
-    `MUST NOT` !pav:curatedBy IRI;
+    `MUST NOT` !(dct:contributor, pav:createdBy, pav:authoredBy, pav:curatedBy) IRI+;
 
     #Publisher
     `MUST` dct:publisher IRI;
@@ -75,10 +63,10 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
     `SHOULD` schemaorg:logo IRI;
 
     #Keywords
-    `MAY` dcat:keyword xsd:string;
+    `MAY` dcat:keyword xsd:string+;
 
     #License
-    `MAY` dct:license IRI;
+    `MAY` dct:license IRI+;
 
     #Rights
     `MAY` dct:rights rdf:langString;
@@ -87,25 +75,25 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
     `MUST NOT` !dct:language .;
 
     #References
-    `MAY` dct:references IRI;
+    `MAY` dct:references IRI+;
 
     #Concept descriptors
-    `MAY` dcat:theme IRI;
+    `MAY` dcat:theme IRI+;
 
     #Vocabulary used
     `MUST NOT` !void:vocabulary IRI;
 
     #Standards used
-    `MUST NOT` !dct:conformsTo IRI;
+    `MUST NOT` !dct:conformsTo IRI+;
 
     #Citations
-    `MAY` cito:citesAsAuthority IRI;
+    `MAY` cito:citesAsAuthority IRI+;
 
     #Related material
     `MAY` rdfs:seeAlso IRI;
 
     #Partitions
-    `MAY` dct:hasPart IRI;
+    `MAY` dct:hasPart IRI+;
 
 
   #Identifiers
@@ -147,13 +135,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
     `MAY` pav:hasCurrentVersion IRI;
 
     #Data source provenance
-    `MUST NOT` !dct:source IRI;
-
-    #Data source provenance
-    `MUST NOT` !pav:retrievedFrom IRI;
-
-    #Data source provenance
-    `MUST NOT` !prov:wasDerivedFrom IRI;
+    `MUST NOT` !(dct:source, pav:retrievedFrom, prov:wasDerivedFrom) IRI;
 
     #Item listing
     `MUST NOT` !sio:has-data-item IRI;
@@ -249,10 +231,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
     `MUST` rdf:type (dctypes:Dataset);
 
     #Type declaration
-    `MUST NOT` !rdf:type (void:Dataset);
-
-    #Type declaration
-    `MUST NOT` !rdf:type (dcat:Distribution);
+    `MUST NOT` !rdf:type (void:Dataset, dcat:Distribution);
 
     #Title
     `MUST` dct:title rdf:langString;
@@ -270,19 +249,10 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
     `MAY` ###BROKEN FIX ME### xsd:dateTime, xsd:date, xsd:gYearMonth, or xsd:gYear;
 
     #Creators
-    `MUST` dct:creator IRI;
+    `MUST` dct:creator IRI+;
 
     #Contributors
-    `MAY` dct:contributor IRI;
-
-    #Contributors
-    `MAY` pav:createdBy IRI;
-
-    #Contributors
-    `MAY` pav:authoredBy IRI;
-
-    #Contributors
-    `MAY` pav:curatedBy IRI;
+    `MAY` (dct:contributor, pav:createdBy, pav:authoredBy, pav:curatedBy) IRI+;
 
     #Publisher
     `MUST` dct:publisher IRI;
@@ -297,10 +267,10 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
     `SHOULD` schemaorg:logo IRI;
 
     #Keywords
-    `MAY` dcat:keyword xsd:string;
+    `MAY` dcat:keyword xsd:string+;
 
     #License
-    `SHOULD` dct:license IRI;
+    `SHOULD` dct:license IRI+;
 
     #Rights
     `MAY` dct:rights rdf:langString;
@@ -309,25 +279,25 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
     `SHOULD` dct:language .;
 
     #References
-    `MAY` dct:references IRI;
+    `MAY` dct:references IRI+;
 
     #Concept descriptors
-    `MAY` dcat:theme IRI;
+    `MAY` dcat:theme IRI+;
 
     #Vocabulary used
     `MUST NOT` !void:vocabulary IRI;
 
     #Standards used
-    `MAY` dct:conformsTo IRI;
+    `MAY` dct:conformsTo IRI+;
 
     #Citations
-    `MAY` cito:citesAsAuthority IRI;
+    `MAY` cito:citesAsAuthority IRI+;
 
     #Related material
     `MAY` rdfs:seeAlso IRI;
 
     #Partitions
-    `MAY` dct:hasPart IRI;
+    `MAY` dct:hasPart IRI+;
 
 
   #Identifiers
@@ -369,13 +339,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
     `MUST NOT` !pav:hasCurrentVersion IRI;
 
     #Data source provenance
-    `SHOULD` dct:source IRI;
-
-    #Data source provenance
-    `SHOULD` pav:retrievedFrom IRI;
-
-    #Data source provenance
-    `SHOULD` prov:wasDerivedFrom IRI;
+    `SHOULD` (dct:source, pav:retrievedFrom, prov:wasDerivedFrom) IRI;
 
     #Item listing
     `MUST NOT` !sio:has-data-item IRI;
@@ -471,10 +435,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
     `SHOULD` rdf:type (dctypes:Dataset);
 
     #Type declaration
-    `MUST` rdf:type (void:Dataset);
-
-    #Type declaration
-    `MUST` rdf:type (dcat:Distribution);
+    `MUST` rdf:type (void:Dataset, dcat:Distribution);
 
     #Title
     `MUST` dct:title rdf:langString;
@@ -492,19 +453,10 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
     `MAY` ###BROKEN FIX ME### xsd:dateTime, xsd:date, xsd:gYearMonth, or xsd:gYear;
 
     #Creators
-    `MUST` dct:creator IRI;
+    `MUST` dct:creator IRI+;
 
     #Contributors
-    `MAY` dct:contributor IRI;
-
-    #Contributors
-    `MAY` pav:createdBy IRI;
-
-    #Contributors
-    `MAY` pav:authoredBy IRI;
-
-    #Contributors
-    `MAY` pav:curatedBy IRI;
+    `MAY` (dct:contributor, pav:createdBy, pav:authoredBy, pav:curatedBy) IRI+;
 
     #Publisher
     `MUST` dct:publisher IRI;
@@ -519,10 +471,10 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
     `SHOULD` schemaorg:logo IRI;
 
     #Keywords
-    `MAY` dcat:keyword xsd:string;
+    `MAY` dcat:keyword xsd:string+;
 
     #License
-    `MUST` dct:license IRI;
+    `MUST` dct:license IRI+;
 
     #Rights
     `MAY` dct:rights rdf:langString;
@@ -531,25 +483,25 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
     `SHOULD` dct:language .;
 
     #References
-    `MAY` dct:references IRI;
+    `MAY` dct:references IRI+;
 
     #Concept descriptors
-    `MAY` dcat:theme IRI;
+    `MAY` dcat:theme IRI+;
 
     #Vocabulary used
     `SHOULD` void:vocabulary IRI;
 
     #Standards used
-    `SHOULD` dct:conformsTo IRI;
+    `SHOULD` dct:conformsTo IRI+;
 
     #Citations
-    `MAY` cito:citesAsAuthority IRI;
+    `MAY` cito:citesAsAuthority IRI+;
 
     #Related material
     `MAY` rdfs:seeAlso IRI;
 
     #Partitions
-    `MUST NOT` !dct:hasPart IRI;
+    `MUST NOT` !dct:hasPart IRI+;
 
 
   #Identifiers
@@ -591,13 +543,7 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
     `MUST NOT` !pav:hasCurrentVersion IRI;
 
     #Data source provenance
-    `SHOULD` dct:source IRI;
-
-    #Data source provenance
-    `SHOULD` pav:retrievedFrom IRI;
-
-    #Data source provenance
-    `SHOULD` prov:wasDerivedFrom IRI;
+    `SHOULD` (dct:source, pav:retrievedFrom, prov:wasDerivedFrom) IRI;
 
     #Item listing
     `MAY` sio:has-data-item IRI;
