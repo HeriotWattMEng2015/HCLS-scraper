@@ -1,0 +1,219 @@
+
+
+#Core Metadata
+
+	#Type declaration
+	`MUST` rdf:type (dctypes:Dataset);
+
+	#Type declaration
+	`MUST NOT` !rdf:type (void:Dataset);
+
+	#Type declaration
+	`MUST NOT` !rdf:type (dcat:Distribution);
+
+	#Title
+	`MUST` dct:title rdf:langString;
+
+	#Alternative titles
+	`MAY` dct:alternative rdf:langString;
+
+	#Description
+	`MUST` dct:description rdf:langString;
+
+	#Date created
+	`MUST NOT` !dct:created .;
+
+	#Other dates
+	`MUST NOT` !###BROKEN FIX ME### xsd:dateTime, xsd:date, xsd:gYearMonth, or xsd:gYear;
+
+	#Creators
+	`MUST NOT` !dct:creator IRI;
+
+	#Contributors
+	`MUST NOT` !dct:contributor IRI;
+
+	#Contributors
+	`MUST NOT` !pav:createdBy IRI;
+
+	#Contributors
+	`MUST NOT` !pav:authoredBy IRI;
+
+	#Contributors
+	`MUST NOT` !pav:curatedBy IRI;
+
+	#Publisher
+	`MUST` dct:publisher IRI;
+
+	#Date of issue
+	`MUST NOT` !dct:issued .;
+
+	#HTML page
+	`SHOULD` foaf:page IRI;
+
+	#Logo
+	`SHOULD` schemaorg:logo IRI;
+
+	#Keywords
+	`MAY` dcat:keyword xsd:string;
+
+	#License
+	`MAY` dct:license IRI;
+
+	#Rights
+	`MAY` dct:rights rdf:langString;
+
+	#Language
+	`MUST NOT` !dct:language .;
+
+	#References
+	`MAY` dct:references IRI;
+
+	#Concept descriptors
+	`MAY` dcat:theme IRI;
+
+	#Vocabulary used
+	`MUST NOT` !void:vocabulary IRI;
+
+	#Standards used
+	`MUST NOT` !dct:conformsTo IRI;
+
+	#Citations
+	`MAY` cito:citesAsAuthority IRI;
+
+	#Related material
+	`MAY` rdfs:seeAlso IRI;
+
+	#Partitions
+	`MAY` dct:hasPart IRI;
+
+
+#Identifiers
+
+	#Preferred prefix
+	`MAY` idot:preferredPrefix xsd:string;
+
+	#Alternate prefix
+	`MAY` idot:alternatePrefix xsd:string;
+
+	#Identifier pattern
+	`MUST NOT` !idot:identifierPattern xsd:string;
+
+	#URI pattern
+	`MUST NOT` !void:uriRegexPattern xsd:string;
+
+	#File access pattern
+	`MUST NOT` !idot:accessPattern idot:AccessPattern;
+
+	#Example identifier
+	`MUST NOT` !idot:exampleIdentifier xsd:string;
+
+	#Example resource
+	`MUST NOT` !void:exampleResource IRI;
+
+
+#Provenance and Change
+
+	#Version identifier
+	`MUST NOT` !pav:version xsd:string;
+
+	#Version linking
+	`MUST NOT` !dct:isVersionOf IRI;
+
+	#Version linking
+	`MUST NOT` !pav:previousVersion IRI;
+
+	#Version linking
+	`MAY` pav:hasCurrentVersion IRI;
+
+	#Data source provenance
+	`MUST NOT` !dct:source IRI;
+
+	#Data source provenance
+	`MUST NOT` !pav:retrievedFrom IRI;
+
+	#Data source provenance
+	`MUST NOT` !prov:wasDerivedFrom IRI;
+
+	#Item listing
+	`MUST NOT` !sio:has-data-item IRI;
+
+	#Creation tool
+	`MUST NOT` !pav:createdWith IRI;
+
+	#Update frequency
+	`SHOULD` dct:accrualPeriodicity IRI;
+
+
+#Availability/Distributions
+
+	#Distribution description
+	`MUST NOT` !dcat:distribution IRI;
+
+	#File format
+	`MUST NOT` !dct:format .;
+
+	#File directory
+	`MAY` dcat:accessURL IRI;
+
+	#File URL
+	`MUST NOT` !dcat:downloadURL IRI;
+
+	#Byte size
+	`MUST NOT` !dcat:byteSize xsd:decimal;
+
+	#RDF File URL
+	`MUST NOT` !void:dataDump IRI;
+
+	#SPARQL endpoint
+	`SHOULD` void:sparqlEndpoint IRI;
+
+	#Documentation
+	`MUST NOT` !dcat:landingPage IRI;
+
+	#Linkset
+	`MUST NOT` !void:subset IRI;
+
+
+#Statistics
+
+	## of triples
+	`MUST NOT` !void:triples xsd:integer;
+
+	## of typed entities
+	`MUST NOT` !void:entities xsd:integer;
+
+	## of subjects
+	`MUST NOT` !void:distinctSubjects xsd:integer;
+
+	## of properties
+	`MUST NOT` !void:properties xsd:integer;
+
+	## of objects
+	`MUST NOT` !void:distinctObjects xsd:integer;
+
+	## of classes
+	`MUST NOT` !void:classPartition IRI;
+
+	## of literals
+	`MUST NOT` !void:classPartition IRI;
+
+	## of RDF graphs
+	`MUST NOT` !void:classPartition IRI;
+
+	#class frequency
+	`MUST NOT` !void:classPartition IRI;
+
+	#property frequency
+	`MUST NOT` !void:propertyPartition IRI;
+
+	#property and subject types
+	`MUST NOT` !void:propertyPartition IRI;
+
+	#property and object types
+	`MUST NOT` !void:propertyPartition IRI;
+
+	#property and literals
+	`MUST NOT` !void:propertyPartition IRI;
+
+	#property subject and object types
+	`MUST NOT` !void:propertyPartition IRI;
