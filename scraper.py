@@ -1,9 +1,7 @@
 import sys
-
-html = open(sys.argv[1]).read()
-
 from bs4 import BeautifulSoup
-h = BeautifulSoup(html)
+
+table = BeautifulSoup(open(sys.argv[1]).read())
 
 val_fixes = {
     # Type declaration
@@ -55,8 +53,8 @@ shapes = {
 
 
 def get_shex(elem, lev, prop, val):
-    rule = "\n\t#" + elem + "\n"
-    rule += "\t`" + lev + "` "
+    rule = "\n    #" + elem + "\n"
+    rule += "    `" + lev + "` "
     if("NOT" in lev):
         rule += "!"
     rule += prop + " "
@@ -66,12 +64,12 @@ def get_shex(elem, lev, prop, val):
 
 def get_shape(shape):
     print "<" + shape + "> {"
-    for row in h.find_all("tr")[1:]:
+    for row in table.find_all("tr")[1:]:
         
         cols = row.find_all("td")
 
         if(len(cols) < 6):
-            print "\n\n#" + cols[0].get_text().strip()
+            print "\n\n  #" + cols[0].get_text().strip()
             continue
 
         elem = cols[0].get_text().strip()
