@@ -38,6 +38,10 @@ val_fixes = {
     
     # File format
     "IRI or xsd:String":
+        ".",
+    
+    # File access pattern
+    "idot:AccessPattern":
         "."
 }
 
@@ -66,7 +70,8 @@ cardinality_fixes = {
     ("dct:conformsTo", "IRI"): "+",
     ("cito:citesAsAuthority", "IRI"): "+",
     ("dct:hasPart", "IRI"): "+",
-    ("dcat:distribution", "IRI"): "+"
+    ("dcat:distribution", "IRI"): "+",
+    ("idot:accessPattern", "."): "+"
 }
 
 shapes = {
@@ -79,7 +84,8 @@ shapes = {
 def get_shex(elem, lev, prop, val, cardinality, last):
     
     if(not val or not prop):
-        get_shex(elem, lev, "###SORT THIS OUT###", "###SORT THIS OUT###")
+        return get_shex(elem, lev, "###SORT THIS OUT###", "###SORT THIS OUT###")
+        
     
     rule = "\n    #" + elem + "\n"
     rule += "    `" + lev + "` "
