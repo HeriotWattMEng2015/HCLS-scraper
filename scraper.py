@@ -10,7 +10,11 @@ val_fixes = {
     
     # Type declaration
     "void:Dataset or dcat:Distribution" :
-        "(void:Dataset, dcat:Distribution)",
+        "(void:Dataset dcat:Distribution)",
+    
+    # Other dates
+    "xsd:dateTime, xsd:date, xsd:gYearMonth, or xsd:gYear" :
+        "(xsd:dateTime xsd:date xsd:gYearMonth xsd:gYear)",
     
     # Date created
     "rdfs:Literal encoded using the relevant ISO 8601 Date and Time compliant string and typed using the appropriate XML Schema datatype":
@@ -34,21 +38,21 @@ val_fixes = {
     
     # File format
     "IRI or xsd:String":
-        "."   
+        "."
 }
 
 prop_fixes = {
     # Other dates
     "pav:createdOn or pav:authoredOn or pav:curatedOn":
-        "###BROKEN FIX ME###",
+        ["pav:createdOn", "pav:authoredOn", "pav:curatedOn"],
     
     # Contributors
     "dct:contributor or or pav:createdBy or pav:authoredBy or pav:curatedBy" : 
-        "(dct:contributor, pav:createdBy, pav:authoredBy, pav:curatedBy)",
+        ["dct:contributor", "pav:createdBy", "pav:authoredBy", "pav:curatedBy"],
     
     # Data source provenance
     "dct:source or pav:retrievedFrom or prov:wasDerivedFrom":
-        "(dct:source, pav:retrievedFrom, prov:wasDerivedFrom)"
+        ["dct:source", "pav:retrievedFrom", "prov:wasDerivedFrom"]
 }
 
 cardinality_fixes = {
@@ -71,7 +75,11 @@ shapes = {
 }
 
 
-def get_shex(elem, lev, prop, val, cardinality):
+def get_shex(elem, lev, prop, val, cardinality, last):
+    
+    if(not val or not prop):
+        get_shex(elem, lev, "###SORT THIS OUT###", "###SORT THIS OUT###")
+    
     rule = "\n    #" + elem + "\n"
     rule += "    `" + lev + "` "
     if("NOT" in lev):
@@ -79,12 +87,18 @@ def get_shex(elem, lev, prop, val, cardinality):
     rule += prop + " "
     rule += val
     rule += cardinality
-    rule += ";"
+    if not last:
+        rule += ","
     print rule
 
 def get_shape(shape):
     print "<" + shape + "> {"
-    for row in table.find_all("tr")[1:]:
+    rows = table.find_all("tr")[1:]
+    last = False;
+    for i, row in enumerate(rows):
+        
+        if i == len(rows)-1:
+            last = True
         
         cols = row.find_all("td")
 
@@ -98,21 +112,19 @@ def get_shape(shape):
         val = cols[2].get_text().strip()
         cardinality = ""
 
-        if(prop in prop_fixes):
-            prop = prop_fixes[prop]
-
         if(val in val_fixes):
             val = val_fixes[val]
             
         if((prop, val) in cardinality_fixes):
             cardinality = cardinality_fixes[(prop, val)]
             
-
-        if(val and prop):
-            get_shex(elem, lev, prop, val, cardinality)
-
-        else:
-            get_shex(elem, lev, "###SORT THIS OUT###", "###SORT THIS OUT###")
+        if(prop in prop_fixes):
+            for fix in prop_fixes[prop]:
+                get_shex(elem, lev, fix, val, cardinality, last)
+            continue
+            
+        get_shex(elem, lev, prop, val, cardinality, last)
+        
     print "}\n"
 
 print """
