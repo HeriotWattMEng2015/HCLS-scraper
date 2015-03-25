@@ -47,9 +47,12 @@ prop_fixes = {
         ["dct:source","pav:retrievedFrom","prov:wasDerivedFrom"]
 }
 
-SummaryLevelShape = 0
-VersionLevelShape = 1
-DistributionLevelShape = 2
+shapes = {
+    "SummaryLevelShape": 0,
+    "VersionLevelShape": 1,
+    "DistributionLevelShape": 2
+}
+
 
 def get_shex(elem, lev, prop, val):
     rule = "\n\t#" + elem + "\n"
@@ -62,8 +65,9 @@ def get_shex(elem, lev, prop, val):
     print rule
 
 def get_shape(shape):
+    print "<" + shape + "> {"
     for row in h.find_all("tr")[1:]:
-
+        
         cols = row.find_all("td")
 
         if(len(cols) < 6):
@@ -71,7 +75,7 @@ def get_shape(shape):
             continue
 
         elem = cols[0].get_text().strip()
-        lev = cols[3 + shape].get_text().strip()
+        lev = cols[3 + shapes[shape]].get_text().strip()
         prop = cols[1].get_text().strip()
         val = cols[2].get_text().strip()
 
@@ -90,6 +94,7 @@ def get_shape(shape):
 
         else:
             get_shex(elem, lev, "###SORT THIS OUT###", "###SORT THIS OUT###")
+    print "}\n"
 
 print """
 PREFIX cito: <http://purl.org/spar/cito/>
@@ -111,12 +116,9 @@ PREFIX void: <http://rdfs.org/ns/void#>
 PREFIX void-ext: <http://ldf.fi/void-ext#>
 PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 """
-print "<SummaryLevelShape> {"
-get_shape(SummaryLevelShape)
-print "}\n\n<VersionLevelShape> {"
-get_shape(VersionLevelShape)
-print "}\n\n<DistributionLevelShape> {"
-get_shape(DistributionLevelShape)
-print "}"
+
+get_shape("SummaryLevelShape")
+get_shape("VersionLevelShape")
+get_shape("DistributionLevelShape")
 
     

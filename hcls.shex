@@ -683,3 +683,4 @@ PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>
 	#property subject and object types
 	`MAY` void:propertyPartition IRI;
 }
+
